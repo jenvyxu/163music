@@ -6,6 +6,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="./css/default.css">
 </head>
+
 <body>
     <div class="page">
         <aside>
@@ -19,21 +20,22 @@
                 <li>歌曲6</li>
             </ul>
             <div class="uploadArea">
-                    <div id="uploadContainer" class="draggable">
-                        <div id="uploadButton" class="clickable">
-                            <p>点击或拖曳文件<p>
-                            <p>文件大小不能超过40MB</p></div>  
-                        </div>
-                        <div id="uploadStatus"></div>
+                <div id="uploadContainer" class="draggable">
+                    <div id="uploadButton" class="clickable">
+                        <p>点击或拖曳文件
+                            <p>
+                                <p>文件大小不能超过40MB</p>
+                    </div>
+                </div>
+                <div id="uploadStatus"></div>
             </div>
         </aside>
         <main>
+            <h1>新建歌曲</h1>
             <form class="form">
                 <div class="row">
-                    <label>
-                        歌名
-                        <input type="text">
-                    </label>
+                    <label>歌名</label>
+                     <input type="text">
                 </div>
                 <div class="row">
                     <label>歌手</label>
@@ -41,18 +43,22 @@
                 </div>
                 <div class="row">
                     <label>外链</label>
-                    <input type="text"></div>
+                    <input type="text">
+                </div>
+                <div class="row actions">
+                    <button type="submit">保存</button>
+                </div>
             </form>
         </main>
     </div>
 
     <script src="../vendors/moxie.js"></script>
     <script src="../node_modules/plupload/js/plupload.min.js"></script>
-    <script src="../node_modules/qiniu-js/dist/qiniu.min.js"></script>    
+    <script src="../node_modules/qiniu-js/dist/qiniu.min.js"></script>
     <script>
         var uploader = Qiniu.uploader({
             runtimes: 'html5',      // 上传模式，依次退化
-            browse_button:'uploadButton',         // 上传选择的点选按钮，必需
+            browse_button: 'uploadButton',         // 上传选择的点选按钮，必需
             uptoken_url: 'http://localhost:8888/uptoken',         // Ajax请求uptoken的Url，强烈建议设置（服务端提供）
             get_new_uptoken: false,             // 设置上传文件的时候是否每次都重新获取新的uptoken
             domain: 'p42szxse5.bkt.clouddn.com',   // bucket域名，下载资源时用到，必需
@@ -70,11 +76,11 @@
                 },
                 'BeforeUpload': function (up, file) {
                     // 每个文件上传前，处理相关的事情
-                    var file='frank'
+                    var file = 'frank'
                 },
                 'UploadProgress': function (up, file) {
                     // 每个文件上传时，处理相关的事情
-                    uploadStatus.textContent='上传中'
+                    uploadStatus.textContent = '上传中'
                 },
                 'FileUploaded': function (up, file, info) {
                     // 每个文件上传成功后，处理相关的事情
@@ -84,18 +90,18 @@
                     //    "key": "gogopher.jpg"
                     //  }
                     // 查看简单反馈
-                    
+
                     var domain = up.getOption('domain');
-                    var response =JSON.parse(info.response);
-                    var sourceLink = 'http://'+domain +"/"+ encodeURIComponent(response.key);
-                    uploadStatus.textContent=sourceLink+' '+response.key;
+                    var response = JSON.parse(info.response);
+                    var sourceLink = 'http://' + domain + "/" + encodeURIComponent(response.key);
+                    uploadStatus.textContent = sourceLink + ' ' + response.key;
                 },
                 'Error': function (up, err, errTip) {
                     //上传出错时，处理相关的事情
                 },
                 'UploadComplete': function () {
                     //队列文件处理完毕后，处理相关的事情
-                   
+
                 }
             }
         });
