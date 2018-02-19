@@ -4,46 +4,62 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
+    <link rel="stylesheet" href="./css/default.css">
 </head>
 <body>
-    <style>
-        *{
-            padding: 0;
-            margin: 0;
-        }
-        #yyy{
-            padding: 50px 80px;
-            border: 2px dashed #ddd;
-            border-radius: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 200px;
-        }
-    </style>
-    <div id="yyy">
-        <span id="xxx">点击或拖曳文件</span>
-        <p>文件大小不能超过40MB</p>
+    <div class="page">
+        <aside>
+            <div class="newSong">新建歌曲</div>
+            <ul class="songList">
+                <li>歌曲1</li>
+                <li>歌曲2</li>
+                <li class="active">歌曲3</li>
+                <li>歌曲4</li>
+                <li>歌曲5</li>
+                <li>歌曲6</li>
+            </ul>
+            <div class="uploadArea">
+                    <div id="uploadContainer" class="draggable">
+                        <div id="uploadButton" class="clickable">
+                            <p>点击或拖曳文件<p>
+                            <p>文件大小不能超过40MB</p></div>  
+                        </div>
+                        <div id="uploadStatus"></div>
+            </div>
+        </aside>
+        <main>
+            <form class="form">
+                <div class="row">
+                    <label>
+                        歌名
+                        <input type="text">
+                    </label>
+                </div>
+                <div class="row">
+                    <label>歌手</label>
+                    <input type="text">
+                </div>
+                <div class="row">
+                    <label>外链</label>
+                    <input type="text"></div>
+            </form>
+        </main>
     </div>
-    <div id="uploadStatus"></div>
-    <div>
-        <audio controls src="http://p42szxse5.bkt.clouddn.com/Ed%20Sheeran%20-%20Shape%20of%20You.mp3"></audio>
-    </div>
+
     <script src="../vendors/moxie.js"></script>
     <script src="../node_modules/plupload/js/plupload.min.js"></script>
     <script src="../node_modules/qiniu-js/dist/qiniu.min.js"></script>    
     <script>
         var uploader = Qiniu.uploader({
             runtimes: 'html5',      // 上传模式，依次退化
-            browse_button:'xxx',         // 上传选择的点选按钮，必需
+            browse_button:'uploadButton',         // 上传选择的点选按钮，必需
             uptoken_url: 'http://localhost:8888/uptoken',         // Ajax请求uptoken的Url，强烈建议设置（服务端提供）
             get_new_uptoken: false,             // 设置上传文件的时候是否每次都重新获取新的uptoken
             domain: 'p42szxse5.bkt.clouddn.com',   // bucket域名，下载资源时用到，必需
             max_file_size: '40mb',             // 最大文件体积限制
             max_retries: 3,                     // 上传失败最大重试次数
             dragdrop: true,                     // 开启可拖曳上传
-            drop_element: 'yyy',          // 拖曳上传区域元素的ID，拖曳文件或文件夹后可触发上传
+            drop_element: 'uploadContainer',          // 拖曳上传区域元素的ID，拖曳文件或文件夹后可触发上传
             chunk_size: '4mb',                  // 分块上传时，每块的体积
             auto_start: true,                   // 选择文件后自动上传，若关闭需要自己绑定事件触发上传
             init: {
