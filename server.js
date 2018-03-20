@@ -43,12 +43,6 @@ var server = http.createServer(function (request, response) {
         response.end()
     }
 
-
-
-
-
-
-
     /******** 代码结束，下面不要看 ************/
 })
 

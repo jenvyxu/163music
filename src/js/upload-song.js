@@ -11,7 +11,6 @@
             this.view=view
             this.model=model
         },
-
         initQiniu(){
             var uploader = Qiniu.uploader({
                 runtimes: 'html5',      // 上传模式，依次退化
@@ -41,6 +40,10 @@
                         var response = JSON.parse(info.response);
                         var sourceLink = 'http://' + domain + "/" + encodeURIComponent(response.key);
                         uploadStatus.textContent = sourceLink + ' ' + response.key;
+                        window.eventHub.emit('upload',{
+                            url:sourceLink,
+                            name:response.key,
+                        })
                     },
                     'Error': function (up, err, errTip) {
                     },
