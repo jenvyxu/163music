@@ -46,7 +46,7 @@
             song.set('name',data.name);
             song.set('singer',data.singer);
             song.set('url',data.url);
-             return song.save().then((newSong)=>{
+            return song.save().then((newSong)=>{
                 let {id,attributes}=newSong
                 //this.data.id=id
                 //this.data.name=attributes.name
