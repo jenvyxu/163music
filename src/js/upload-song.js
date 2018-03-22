@@ -30,12 +30,13 @@
                         });
                     },
                     'BeforeUpload': function (up, file) {
-                        var file = 'frank'
+                        window.eventHub.emit('beforeUpload')
                     },
                     'UploadProgress': function (up, file) {
                         uploadStatus.textContent = '上传中'
                     },
                     'FileUploaded': function (up, file, info) {
+                        window.eventHub.emit('afterUpload')
                         var domain = up.getOption('domain');
                         var response = JSON.parse(info.response);
                         var sourceLink = 'http://' + domain + "/" + encodeURIComponent(response.key);
