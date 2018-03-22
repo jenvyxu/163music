@@ -5,7 +5,11 @@
             return $(this.el).find(selector)[0]
         }
     }
-    let model={}
+    let model={
+        data:{
+            status:'open'
+        }
+    }
     let controller={
         init(view,model){
             this.view=view
@@ -29,14 +33,20 @@
                         plupload.each(files, function (file) {
                         });
                     },
-                    'BeforeUpload': function (up, file) {
+                    'BeforeUpload': (up, file)=> {
                         window.eventHub.emit('beforeUpload')
+                        if(this.model.data.status==='closed'){
+                            return false
+                        }else{
+                            this.model.data.status='closed'
+                            return true
+                        }
                     },
-                    'UploadProgress': function (up, file) {
-                        uploadStatus.textContent = '上传中'
+                    'UploadProgress': (up, file)=>{
                     },
-                    'FileUploaded': function (up, file, info) {
+                    'FileUploaded': (up, file, info)=>{
                         window.eventHub.emit('afterUpload')
+                        this.model.data.status='closed'
                         var domain = up.getOption('domain');
                         var response = JSON.parse(info.response);
                         var sourceLink = 'http://' + domain + "/" + encodeURIComponent(response.key);

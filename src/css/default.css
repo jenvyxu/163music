@@ -123,6 +123,7 @@ body{
     height: 100%;
     background: rgba(0,0,0,0.2);
     z-index: 1;
+    pointer-events: none;/*用户挡不住鼠标事件*/
 }
 .site-loading.active{
     visibility: visible;
