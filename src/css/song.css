@@ -14,23 +14,26 @@
     width: 100%;
     height: 100%;
     background: transparent center center no-repeat;
-    filter: blur(5px);
+    filter: blur(10px);
     background-size: cover;
 }
 
 .disc-container{position: relative; }
 .disc-container .icon-wrapper{position: absolute; z-index: 1; display: flex;
     justify-content: center; align-items: center;
-    border: 1px solid white; height: 20vw; width: 20vw;
+    border: 1px solid #f3f3f3; height: 16vw; width: 16vw;
     border-radius: 50%; background: rgba(0,0,0,0.5);
 }
-.disc-container .icon {width: 10vw; fill: white;}
+.icon {
+    width: 12vw; height: 12vw;
+    fill: #f3f3f3;
+}
 .disc-container .pointer{width: 24vw; position: absolute; left: 45vw; }
 .disc-container .disc{display: flex; justify-content: center; align-items: center; margin-top: 18vw; }
-.disc-container .ring{width: 72vw; }
-.disc-container .light{width: 72vw; position: absolute; }
+.disc-container .ring{width: 80vw; }
+.disc-container .light{width: 80vw; position: absolute; }
 .disc-container .cover{
-    width: 44.5vw; position: absolute; border-radius: 50%;
+    width: 50vw; position: absolute; border-radius: 50%;
     animation: circle 20s infinite linear;
     animation-play-state: paused;
 }
@@ -42,7 +45,6 @@
 .disc-container .icon-pause{display: none; }
 .disc-container.playing .icon-pause{display: block; }
 .disc-container.playing .icon-play{display: none; }
-
 .song-description{
     flex-grow: 1;
     color: #AEABAC;
