@@ -19,7 +19,6 @@
                 this.active()
             })
             window.eventHub.on('select',(data)=>{
-                console.log(data.id)
                 this.deactive()
             })
             $(this.view.el).on('click',()=>{

@@ -51,13 +51,15 @@
     text-align: center;
     line-height: 2;
     margin-top: 20px;
+    z-index: 1;
 }
 .song-description h1{
     color: white;
     font-size: 18px;
+    font-weight: lighter;
 }
 .song-description p{
-    font-size: 14px;
+    font-size: 15px;
     line-height: 24px;
 }
 .song-description .lines{
