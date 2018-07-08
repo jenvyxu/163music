@@ -1,6 +1,19 @@
 {
     let view={
-        el:'.uploadArea',
+        el:'main>.uploadArea',
+        template:` 
+                <div id="uploadContainer" class="draggable">
+                    <div id="uploadButton" class="clickable">
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-add"></use>
+                    </svg>
+                                <p>点击添加按钮或拖曳文件到此处（文件大小最好不要超过40MB）</p>
+                    </div>
+                </div> `,
+        render(){
+            let $el=$(this.el)
+            $el.html(this.template)
+        },
         find(selector){
             return $(this.el).find(selector)[0]
         }
@@ -14,6 +27,7 @@
         init(view,model){
             this.view=view
             this.model=model
+            this.view.render()
         },
         initQiniu(){
             var uploader = Qiniu.uploader({
@@ -64,7 +78,6 @@
         }
     }
     controller.init(view,model)
-
     controller.initQiniu()
 
 }

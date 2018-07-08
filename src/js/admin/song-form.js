@@ -1,10 +1,11 @@
 {
     let view = {
-        el: '.page>main',
+        el: '.page>main>.songMessage',
         init(){
             this.$el=$(this.el)
         },
-        template: `      
+        template: `
+    
             <form class="form">
                 <div class="row">
                     <label>歌名</label>
@@ -23,7 +24,7 @@
                     <input name="cover" type="text" value="__cover__">
                 </div>
                 <div class="row">
-                    <label>歌词</label>
+                    <label class="lyric">歌词</label>
                     <textarea name="lyrics" rows="20" cols="50">__lyrics__</textarea>
                 </div>
                 <div class="row actions">
@@ -39,9 +40,9 @@
             })
             this.$el.html(html)
             if(data.id){
-                this.$el.prepend('<h1>编辑歌曲</h1>')
+                this.$el.prepend('<h3>编辑歌曲</h3>')
             }else{
-                this.$el.prepend('<h1>新建歌曲</h1>')
+                this.$el.prepend('<h3>新建歌曲</h3>')
             }
         },
         reset(){

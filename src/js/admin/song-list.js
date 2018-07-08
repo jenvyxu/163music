@@ -2,8 +2,10 @@
     let view={
         el:'#songList-containner',
         template:`
-                 <ul class="songList"></ul>`,
+                 <ul class="songList">   
+                </ul>`,
         render(data){
+            console.log(data)
             let $el=$(this.el)
             $el.html(this.template)
             let {songs,selectSongId}=data
@@ -29,7 +31,7 @@
             selectSongId:undefined,
         },
         find(){
-            var query=new AV.Query('Song');
+            let query=new AV.Query('Song');
             return query.find().then((songs)=>{
                 this.data.songs=songs.map((song)=>{
                     return {id:song.id,...song.attributes}
@@ -38,11 +40,11 @@
             })
         }
     }
-
     let controller={
         init(view,model) {
             this.view = view
             this.model = model
+            this.model.find()
             this.view.render(this.model.data)
             this.bindEvents()
             this.bindEventHub()
