@@ -1,7 +1,8 @@
 {
     let view={
         el:'.page-2',
-        template:``,
+        template:`
+        `,
         init(){
             this.$el=$(this.el)
         },
