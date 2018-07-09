@@ -54,9 +54,12 @@ section.topbar > a::after{
 /* tabs-nav */
 .tabs-nav{
     display: flex;
+
     border-bottom: 1px solid #CCCCCC;
 }
 .tabs-nav>li{
+    font-size: 15px;
+    color: #333;
     width: 33.333333%;
     text-align: center;
     line-height: 20px;
@@ -202,4 +205,132 @@ body{font:14px/1.5 Helvetica,sans-serif;}
     vertical-align: -0.15em;
     fill: currentColor;
     overflow: hidden;
+}
+
+/*page-2*/
+.page-2>.hotMusicBg{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: url("../../img/hot_music_bg.jpg");
+    background-size: cover;
+    height: 161px;
+    width: 100%;
+    padding-left: 20px;
+}
+.page-2>.hotMusicBg::after{
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    content: '';
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.2);
+}
+.page-2>.hotMusicBg>.hotMusicIcon{
+    padding-top:34px;
+    width: 141px;
+    height: 67px;
+    background: url("../../img/index_icon.png");
+    background-size: 166px 97px;
+    background-position-x: -24px;
+    background-position-y: -30px;
+    z-index: 1;
+}
+.page-2>.hotMusicBg>p{
+    font-size: 11px;
+    margin-top: 10px;
+    color:hsla(0,0%,100%,.8);
+    z-index: 1;
+}
+.page-2>ol>li{
+    display: flex;
+    align-items: center;
+}
+.page-2>ol>li>.number{
+    font-size: 17px;
+    margin: 10px;
+}
+.page-2>ol>li>.musicAndPlay{
+    padding: 6px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-grow: 1;
+}
+.page-2>ol>li>.musicAndPlay>h3{
+    font-size: 17px;
+}
+.page-2>ol>li .highlight.number{
+    color: #df3436;
+}
+.page-2>ol>li>.musicAndPlay>p{
+    font-size: 12px}
+.page-2>ol>li>.musicAndPlay .icon-sq {
+    fill: #FE672E;
+}
+.page-2>ol>li>.musicAndPlay>a{
+    padding: 0 10px;
+    }
+.page-2>ol>li>.musicAndPlay>a>.icon{
+    width: 22px;
+    height: 22px;
+    vertical-align: middle;
+    fill: #AAA;
+}
+
+/*
+page-3*/
+
+.page-3>.search{
+    padding: 15px 10px;
+    width: 100%;
+border-bottom: 1px solid #ddd;
+}
+.page-3>.search>form{
+position: relative;
+}
+.page-3>.search>form .icon{
+    position: absolute;
+    fill:#D2D2D3;
+    top: 9px;
+    left: 9px;
+    width: 0.8em; height: 0.8em;
+    vertical-align: -0.15em;
+    overflow: hidden;
+
+}
+.page-3>.search>form>input{
+    font-size: 14px;
+    outline: none;
+    border: none;
+    border-radius: 30px;
+    padding: 6px 30px;
+    background: #EBECEC;
+    width: 100%;
+}
+.page-3>.search>form>input::placeholder{
+    color: #D2D2D3;
+}
+.page-3>.hotResearch{
+    padding: 15px 10px;
+}
+.page-3>.hotResearch>h3{
+    font-size: 12px;
+}
+.page-3>.hotResearch>ul{
+    display: flex;
+    margin: 10px 0;
+    flex-wrap: wrap;
+}
+.page-3>.hotResearch>ul>li{
+    border-radius: 16px;
+    color: #333;
+    border: 1px solid #EBECEC;
+    line-height: 32px;
+    font-size: 14px;
+    padding: 0 14px;
+    margin:0 8px 8px 0;
 }

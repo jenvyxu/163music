@@ -45,7 +45,6 @@
             script2.src='./js/index/page-1-2.js'
             script2.onload=function(){
                 console.log('模块2加载完毕');
-
             }
             document.body.appendChild(script2)
         }
