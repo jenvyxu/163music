@@ -5,7 +5,6 @@
                  <ul class="songList">   
                 </ul>`,
         render(data){
-            console.log(data)
             let $el=$(this.el)
             $el.html(this.template)
             let {songs,selectSongId}=data
