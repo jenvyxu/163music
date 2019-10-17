@@ -10,4 +10,5 @@
 
 ### 移动端播放器
 手机扫码打开页面
+![二维码](https://github.com/JenvyXU/163music/blob/master/mobile.png)
 
