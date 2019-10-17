@@ -9,6 +9,8 @@
 4. 上传成功后编辑歌曲信息，添加歌名、歌手、歌词信息后点击保存
 
 ### 移动端播放器
+链接：https://jenvyxu.github.io/163music/src/index.html
+
 手机扫码打开页面
 
 ![二维码](https://github.com/JenvyXU/163music/blob/master/mobile.png)
