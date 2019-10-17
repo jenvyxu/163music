@@ -1,14 +1,13 @@
 {
-
-    let view={
-        el:'section.songs',
-        init(){
-            this.$el=$(this.el)
-        },
-        render(data){
-            let {songs}=data
-            songs.map((song)=>{
-                let $li=$(`
+  let view = {
+    el: "section.songs",
+    init() {
+      this.$el = $(this.el);
+    },
+    render(data) {
+      let { songs } = data;
+      songs.map(song => {
+        let $li = $(`
         <li>
           <h3>${song.name}</h3>
           <p>
@@ -23,34 +22,42 @@
             </svg>
           </a>
         </li>                
-        `)
-                this.$el.find('ol.list').append($li)
-            })
-        }
+        `);
+        this.$el.find("ol.list").append($li);
+      });
     }
-    let model={
-        data:{
-            songs:[]
-        },
-        find(){
-            var query=new AV.Query('Song');
-            return query.find().then((songs)=>{
-                this.data.songs=songs.map((song)=>{
-                    return {id:song.id,...song.attributes}
-                })
-                return songs
-            })
-        }
+  };
+  let model = {
+    data: {
+      songs: []
+    },
+    find() {
+      var query = new AV.Query("Song");
+      return query.find().then(songs => {
+        this.data.songs = songs.map(song => {
+          //return {id:song.id,...song.attributes}
+          return {
+            id: song.id,
+            name: song.attributes.name,
+            singer: song.attributes.singer,
+            lyrics: song.attributes.lyrics,
+            url: song.attributes.url,
+            cover: song.attributes.cover
+          };
+        });
+        return songs;
+      });
     }
-    let controller={
-        init(view,model){
-            this.view=view
-            this.view.init()
-            this.model=model
-            this.model.find().then(()=>{
-                this.view.render(this.model.data);
-            })
-        }
+  };
+  let controller = {
+    init(view, model) {
+      this.view = view;
+      this.view.init();
+      this.model = model;
+      this.model.find().then(() => {
+        this.view.render(this.model.data);
+      });
     }
-    controller.init(view,model)
+  };
+  controller.init(view, model);
 }
