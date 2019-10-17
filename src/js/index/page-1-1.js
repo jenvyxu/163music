@@ -1,8 +1,7 @@
 {
-    let view={
-        el:'section.playlists'
-
-    }
-    let model={}
-    let controller={}
+  let view = {
+    el: "section.playlists"
+  };
+  let model = {};
+  let controller = {};
 }

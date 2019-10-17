@@ -1,7 +1,7 @@
 {
-    let view={
-        el:'.page-3',
-        template:`
+  let view = {
+    el: ".page-3",
+    template: `
                 <div class="search">
             <form action="">
                 <input type="text" placeholder="搜索歌曲、歌手、专辑">
@@ -25,37 +25,37 @@
                 <li>E能量</li>
             </ul>
         </div>`,
-        init(){
-            this.$el=$(this.el)
-        },
-        show(){
-            this.$el.addClass('active')
-        },
-        hide(){
-            this.$el.removeClass('active')
-        },
-        render(){
-            $(this.el).html(this.template)
-        }
+    init() {
+      this.$el = $(this.el);
+    },
+    show() {
+      this.$el.addClass("active");
+    },
+    hide() {
+      this.$el.removeClass("active");
+    },
+    render() {
+      $(this.el).html(this.template);
     }
-    let model={}
-    let controller={
-        init(view,model) {
-            this.view = view
-            this.view.init()
-            this.view.render()
-            this.model = model
-            this.bindEventHub()
-        },
-        bindEventHub(){
-            window.eventHub.on('selectTab',(tabName)=>{
-                if(tabName==='page-3'){
-                    this.view.show()
-                }else{
-                    this.view.hide()
-                }
-            })
+  };
+  let model = {};
+  let controller = {
+    init(view, model) {
+      this.view = view;
+      this.view.init();
+      this.view.render();
+      this.model = model;
+      this.bindEventHub();
+    },
+    bindEventHub() {
+      window.eventHub.on("selectTab", tabName => {
+        if (tabName === "page-3") {
+          this.view.show();
+        } else {
+          this.view.hide();
         }
+      });
     }
-    controller.init(view,model)
+  };
+  controller.init(view, model);
 }
