@@ -1,83 +1,195 @@
 {
-    let view={
-        el:'main>.uploadArea',
-        template:` 
-                <div id="uploadContainer" class="draggable">
-                    <div id="uploadButton" class="clickable">
+  let view = {
+    el: "main>.uploadArea",
+    template: ` 
+            <div class="selectCover">
+                <div class="addBtn">
                     <svg class="icon" aria-hidden="true">
-                        <use xlink:href="#icon-add"></use>
+                        <use xlink:href="#icon-img"></use>
                     </svg>
-                                <p>点击添加按钮或拖曳文件到此处（文件大小最好不要超过40MB）</p>
-                    </div>
-                </div> `,
-        render(){
-            let $el=$(this.el)
-            $el.html(this.template)
-        },
-        find(selector){
-            return $(this.el).find(selector)[0]
-        }
+                    <div class="">添加封面</div>                  
+                </div>
+                <div class="uploadBar">
+                    <div class="progress"></div>
+                </div>
+                <input type="file" accept="image/jpg, image/png, image/jpeg, image/gif">
+            </div>
+            <div class="selectSong">
+                <div class="addBtn">
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-music"></use>
+                    </svg>
+                    <div>添加歌曲</div>
+                </div>
+                <div class="uploadBar">
+                <div class="progress"></div>
+            </div>
+                <input type="file"  accept="audio/mp3">
+            </div>
+            <div class="uploadBtn">
+                <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-upload"></use>
+                </svg>
+                <div class="action">点击上传</div>
+            </div>
+            <!--<p>点击添加按钮或拖曳文件到此处（文件大小最好不要超过40MB）</p>-->`,
+    render() {
+      let $el = $(this.el);
+      $el.html(this.template);
+    },
+    find(selector) {
+      return $(this.el).find(selector)[0];
     }
-    let model={
-        data:{
-            status:'open'
-        }
+  };
+  let model = {
+    data: {
+      status: "open"
     }
-    let controller={
-        init(view,model){
-            this.view=view
-            this.model=model
-            this.view.render()
-        },
-        initQiniu(){
-            var uploader = Qiniu.uploader({
-                runtimes: 'html5',      // 上传模式，依次退化
-                browse_button: this.view.find('#uploadButton'),         // 上传选择的点选按钮，必需
-                uptoken_url: 'http://localhost:8888/uptoken',         // Ajax请求uptoken的Url，强烈建议设置（服务端提供）
-                get_new_uptoken: false,             // 设置上传文件的时候是否每次都重新获取新的uptoken
-                domain: 'p42szxse5.bkt.clouddn.com',   // bucket域名，下载资源时用到，必需
-                max_file_size: '40mb',             // 最大文件体积限制
-                max_retries: 3,                     // 上传失败最大重试次数
-                dragdrop: true,                     // 开启可拖曳上传
-                drop_element: this.view.find('#uploadContainer'),          // 拖曳上传区域元素的ID，拖曳文件或文件夹后可触发上传
-                chunk_size: '4mb',                  // 分块上传时，每块的体积
-                auto_start: true,                   // 选择文件后自动上传，若关闭需要自己绑定事件触发上传
-                init: {
-                    'FilesAdded': function (up, files) {
-                        plupload.each(files, function (file) {
-                        });
-                    },
-                    'BeforeUpload': (up, file)=> {
-                        window.eventHub.emit('beforeUpload')
-                        if(this.model.data.status==='closed'){
-                            return false
-                        }else{
-                            this.model.data.status='closed'
-                            return true
-                        }
-                    },
-                    'UploadProgress': (up, file)=>{
-                    },
-                    'FileUploaded': (up, file, info)=>{
-                        window.eventHub.emit('afterUpload')
-                        this.model.data.status='closed'
-                        var domain = up.getOption('domain');
-                        var response = JSON.parse(info.response);
-                        var sourceLink = 'http://' + domain + "/" + encodeURIComponent(response.key);
-                        window.eventHub.emit('new',{
-                            url:sourceLink,
-                            name:response.key,
-                        })
-                    },
-                    'Error': function (up, err, errTip) {
-                    },
-                    'UploadComplete': function () {
-                    }
-                }
+  };
+  let controller = {
+    init(view, model) {
+      this.view = view;
+      this.model = model;
+      this.view.render();
+    },
+    bindEvents() {
+      //添加封面文件和歌曲文件
+      let self = this;
+      $(self.view.el)
+        .find("uploadBtn")
+        .css({
+          border: "1px solid red"
+        });
+      $(this.view.el)
+        .find("input")
+        .on("click", function(e) {
+          $(this)
+            .unbind("change")
+            .bind("change", function() {
+              self.files = $(this)[0].files[0];
+              if (self.files) {
+                $(this)
+                  .prev()
+                  .addClass("ready");
+              }
             });
-        }
-    }
-    controller.init(view,model)
-    controller.initQiniu()
+        });
 
+      $(this.view.el)
+        .find(".uploadBtn")
+        .on("click", function() {
+          self.uploadFiles();
+          window.eventHub.emit("uploading");
+        });
+      window.eventHub.on("editMode", function() {
+        $(self.view.el).css({ display: "none" });
+      });
+      window.eventHub.on("addMode", function() {
+        $(self.view.el).css({ display: "flex" });
+      });
+    },
+    uploadFiles() {
+      //向服务器获取token
+      let self = this;
+      $.ajax({
+        url: "http://www.jenvyxu.xyz:4000/uptoken",
+        success: function(res) {
+          let token = JSON.parse(res).uptoken;
+          let domain = JSON.parse(res).domain;
+          let config = {
+            useCdnDomain: true,
+            disableStatisticsReport: false,
+            retryCount: 6,
+            region: qiniu.region.z2
+          };
+          let putExtra = {
+            fname: "",
+            params: {},
+            mimeType: null
+          };
+          self.uploadWithQiniu(token, putExtra, config, domain);
+        }
+      });
+    },
+    uploadWithQiniu(token, putExtra, config, domain) {
+      let self = this;
+      let error = function(res) {};
+      let songUrl;
+      let coverUrl;
+      let coverFile = $(this.view.el).find("input[type=file]")[0].files[0];
+      let songFile = $(this.view.el).find("input[type=file]")[1].files[0];
+      if (songFile) {
+        let key = songFile.name;
+
+        let next = function(res) {
+          let total = res.total;
+          $(self.view.el)
+            .find(".progress")
+            .eq(1)
+            .css({ width: total.percent + "%" });
+        };
+        let complete = function(res) {
+          setTimeout(() => {
+            $(self.view.el)
+              .find(".progress")
+              .eq(1)
+              .css({ width: 0 });
+            $(self.view.el)
+              .find(".uploadBar")
+              .eq(1)
+              .removeClass("ready");
+          }, 500);
+          songUrl = encodeURI(`http://${domain}/${key}`);
+          eventHub.emit("setSongUrl", songUrl);
+          window.eventHub.emit("uploadDone");
+        };
+        let subObject = {
+          next: next,
+          error: error,
+          complete: complete
+        };
+        let observable = qiniu.upload(songFile, key, token, putExtra, config);
+        let subscription = observable.subscribe(subObject);
+      }
+
+      if (coverFile) {
+        let key = coverFile.name;
+        let next = function(res) {
+          let total = res.total;
+          $(self.view.el)
+            .find(".progress")
+            .eq(0)
+            .css({ width: total.percent + "%" });
+        };
+        let complete = function(res) {
+          setTimeout(() => {
+            $(self.view.el)
+              .find(".progress")
+              .eq(0)
+              .css({ width: 0 });
+            $(self.view.el)
+              .find(".uploadBar")
+              .eq(0)
+              .removeClass("ready");
+          }, 500);
+          coverUrl = encodeURI(`http://${domain}/${key}`);
+          eventHub.emit("setCoverUrl", coverUrl);
+          window.eventHub.emit("uploadDone");
+        };
+        let subObject = {
+          next: next,
+          error: error,
+          complete: complete
+        };
+        let observable = qiniu.upload(coverFile, key, token, putExtra, config);
+        let subscription = observable.subscribe(subObject);
+      }
+    },
+    initQiniu() {
+      qiniu.upload();
+    }
+  };
+  controller.init(view, model);
+  controller.initQiniu();
+  controller.bindEvents();
 }
