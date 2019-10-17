@@ -1,7 +1,6 @@
 # 网易云音乐播放器和后台
 ### 后台管理页面
-链接：
-![image](https://github.com/JenvyXU/163music/blob/master/admin.png)
+链接：https://jenvyxu.github.io/163music/src/admin.html
 
  **使用方法**
 1. 点击新建歌曲，页面右边显示新建歌曲页面
