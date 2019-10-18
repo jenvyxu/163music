@@ -1,4 +1,6 @@
 import EventHub from 'js/event-hub.js'
+import AV from 'leancloud-storage'
+import 'js/av.js' //初始AV
 let view = {
   el: ".page>main>.songMessage",
   init() {

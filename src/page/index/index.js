@@ -11,12 +11,3 @@ Page1.controller.init(Page1.view,Page1.model)
 Page2.controller.init(Page2.view,Page2.model)
 Page3.controller.init(Page3.view,Page3.model)
 PageSong.controller.init(PageSong.view,PageSong.model)
-
-/* <script src="../vendors/jquery.min.js"></script>
-  <script src="../vendors/av-min.js"></script>
-  <script src="./js/initializers/av.js"></script>
-  <script src="./js/admin/event-hub.js"></script>
-  <script src="./js/index/tabs.js"></script>
-  <script src="./js/index/page-1.js"></script>
-  <script src="./js/index/page-2.js"></script>
-  <script src="./js/index/page-3.js"></script> */

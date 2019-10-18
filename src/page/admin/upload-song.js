@@ -53,6 +53,7 @@ let controller = {
     this.view = view;
     this.model = model;
     this.view.render();
+    this.bindEvents()
   },
   bindEvents() {
     //添加封面文件和歌曲文件
