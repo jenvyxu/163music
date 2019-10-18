@@ -1,6 +1,7 @@
 const path = require("path");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   mode: "development",
@@ -26,7 +27,9 @@ module.exports = {
         use: [
           {
             loader: "file-loader",
-            options: {}
+            options: {
+              outputPath: 'img',
+            }
           }
         ]
       },
@@ -66,6 +69,7 @@ module.exports = {
     }
   },
   plugins: [
+    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       filename: "index.html",
       chunks: ["index"],
