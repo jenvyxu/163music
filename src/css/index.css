@@ -239,7 +239,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background: url("../../img/hot_music_bg.jpg");
+  background: url("../img/hot_music_bg.jpg");
   background-size: cover;
   height: 161px;
   width: 100%;
@@ -259,7 +259,7 @@ body {
   padding-top: 34px;
   width: 141px;
   height: 67px;
-  background: url("../../img/index_icon.png");
+  background: url("../img/index_icon.png");
   background-size: 166px 97px;
   background-position-x: -24px;
   background-position-y: -30px;
