@@ -13,5 +13,5 @@
 
 手机扫码打开页面
 
-![二维码](https://github.com/JenvyXU/163music/blob/master/phone.png)
+![二维码](https://github.com/JenvyXU/163music/blob/master/QRcode.png)
 
